@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Character Tokenizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="token.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Character Tokenizer </h1>
+            <p>Encode and decode text using a simple character-level tokenizer.</p>
+        </header>
+
+        <div class="section-container">
+            <div class="card" id="encode-container">
+                <h2>Text to Encode</h2>
+                <textarea id="encode-textarea" placeholder="Your text goes here..."></textarea>
+                <button id="encode-Btn" class="action-btn">Encode</button>
+                <div id="encoded-result" class="result-box"></div>
+                <div id="display-footer" class="result-footer"></div>
+            </div>
+
+            <div class="card" id="decode-container">
+                <h2>Encode to Decode</h2>
+                <textarea id="decode-textarea"
+                    placeholder="Your Encoded value goes here, e.g., [1,2,3] or 1,2,3"></textarea>
+                <button id="decode-Btn" class="action-btn">Decode</button>
+                <div id="decoded-result" class="result-box"></div>
+            </div>
+        </div>
+
+        <div id="vocab-container">
+            <div class="info-box card">
+                <h2>What is Character Tokenization?</h2>
+                <p>
+                    Character tokenization is the process of breaking down a text
+                    into its smallest individual units: characters. Unlike word or
+                    subword tokenization, it treats each letter, number, symbol, and
+                    even spaces as distinct tokens.
+                </p>
+                <p>
+                    This method is simple and ensures that every input can be
+                    represented, making it robust against out-of-vocabulary words.
+                    However, it results in longer sequences of tokens and doesn't capture
+                    semantic meaning as effectively as higher-level tokenization.
+                </p>
+            </div>
+            <div id="vocab-display" class="vocab-list card">
+                <h2>Vocabulary Map Customised</h2>
+                <div id="vocab-scroll-container" class="vocab-list-items">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Footer Section -->
+    <footer class="main-footer">
+        <p>Built with ❤️ by Adarsh</p>
+        <div class="social-links">
+            <a href="https://github.com/CH-ADARSH" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/adarsh-chaturvedi-/" target="_blank" aria-label="LinkedIn"><i
+                    class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/AdarshChat24011" target="_blank" aria-label="Twitter"><i
+                    class="fab fa-twitter"></i></a>
+            <a href="https://hashnode.com/@adarsh0207" target="_blank" aria-label="Hashnode"
+                style="font-size: 18px; text-decoration: none;">#node</a>
+        </div>
+    </footer>
+    <script src="token.js"></script>
+</body>
+
+</html>
