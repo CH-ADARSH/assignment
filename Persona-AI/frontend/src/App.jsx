@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import ConversationPage from "./pages/ConversationPage";
+import ConversationPage from "./pages/ConversationPage.jsx";
 
 export default function App() {
   return (

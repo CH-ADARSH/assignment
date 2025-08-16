@@ -13,7 +13,7 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <PersonaCard
-            name="Hitesh"
+            name="Hitesh Choudhary"
             role="Software Technology Expert"
             imgSrc="/hitesh.jpg"
           />

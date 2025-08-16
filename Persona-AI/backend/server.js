@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import personas from "./personaConfigs.js";
+import { HITESH_CHOUDHARY, PIYUSH_GARG } from "./personaConfigs.js";
 
 dotenv.config();
 
@@ -12,12 +12,37 @@ const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/chat", async (req, res) => {
-  const { message, persona } = req.body;
-
-  if (!message || !persona) {
-    return res.status(400).json({ error: "Message and persona are required." });
+// Persona prompt selector function
+function getPersonaPrompt(personaId) {
+  switch (personaId) {
+    case "hitesh":
+      return HITESH_CHOUDHARY;
+    case "piyush":
+      return PIYUSH_GARG;
+    default:
+      return null;
   }
+}
+
+// Chat API using persona prompt
+app.post("/api/chat", async (req, res) => {
+  const { message, personaId } = req.body;
+
+  if (!message || !personaId) {
+    return res
+      .status(400)
+      .json({ error: "Message and personaId are required." });
+  }
+
+  const systemPrompt = getPersonaPrompt(personaId);
+  if (!systemPrompt) {
+    return res.status(400).json({ error: "Unknown persona ID." });
+  }
+
+  const messages = [
+    { role: "system", content: systemPrompt },
+    { role: "user", content: message },
+  ];
 
   try {
     const response = await fetch("https://api.perplexity.ai/chat/completions", {
@@ -28,17 +53,8 @@ app.post("/api/chat", async (req, res) => {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        model: "sonar-pro", // adjust if you have preferred model
-        messages: [
-          {
-            role: "system",
-            content: `You are ${persona}, please answer with persona-specific tone and style.`,
-          },
-          {
-            role: "user",
-            content: message,
-          },
-        ],
+        model: "sonar-pro",
+        messages,
         max_tokens: 300,
         temperature: 0.7,
       }),
@@ -50,17 +66,16 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const data = await response.json();
-    const reply =
-      data.choices?.[0]?.message?.content ||
-      "Sorry, no response was generated.";
 
+    const reply =
+      data.choices?.[0]?.message?.content || "Sorry, no response generated.";
     res.json({ reply });
   } catch (error) {
-    console.error("Error calling Perplexity API:", error.message);
+    console.error("Perplexity API error:", error.message);
     res.status(500).json({ error: error.message || "Server error" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

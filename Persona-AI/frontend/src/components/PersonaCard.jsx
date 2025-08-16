@@ -24,5 +24,6 @@ export default function PersonaCard({ name, role, imgSrc }) {
         Start Conversation with {name}
       </Link>
     </div>
+    
   );
 }
