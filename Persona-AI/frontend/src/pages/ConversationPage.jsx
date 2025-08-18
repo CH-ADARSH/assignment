@@ -53,7 +53,7 @@ export default function ConversationPage() {
         return [
           {
             role: "bot",
-            content: `Han ji! Mai Hitesh Choudhary, Mai learn and built mae vishwas karta hu .Kuch bhi sikna ho tho hamare yotube channel pe aajavo `,
+            content: `Haan ji, kaise ho sab log! Swagat hai aap sabka, umeed hai sab mast honge aur energy full hogi. Chai ready hai na? Chaliye, fir shuru karte hain apni baat-cheet 😄. `,
             timestamp: new Date().toISOString(),
             read: true,
           },
@@ -63,7 +63,7 @@ export default function ConversationPage() {
           {
             role: "bot",
             content:
-              "Alright!! Welcome to the Persona of Piyush Garg. Kuch bhi sikhna ho tho batavo mai sikhavunga ",
+              "Alright!! Welcome Kaise ho sab!!Chaliye, fir shuru karte hain apni baat-cheet—main hoon Piyush Garg, aur aaj hum seedhi, practical baat karenge: real-world build, scale aur ship.", 
             timestamp: new Date().toISOString(),
             read: true,
           },
