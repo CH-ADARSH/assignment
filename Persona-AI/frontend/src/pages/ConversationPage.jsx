@@ -2,6 +2,11 @@ import Navbar from "../components/Navbar";
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+
+// ✅ Use environment variable for API base URL
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const personaImages = {
   hitesh: "/hitesh.jpg",
   piyush: "/piyush.jpeg",
@@ -10,9 +15,9 @@ const personaImages = {
 
 const personaMap = {
   "Hitesh Choudhary": "hitesh",
-  "Hitesh": "hitesh",
+  Hitesh: "hitesh",
   "Piyush Garg": "piyush",
-  "Piyush": "piyush",
+  Piyush: "piyush",
   guest: "guest",
   Guest: "guest",
 };
@@ -53,7 +58,7 @@ export default function ConversationPage() {
         return [
           {
             role: "bot",
-            content: `Haan ji, kaise ho sab log! Swagat hai aap sabka, umeed hai sab mast honge aur energy full hogi. Chai ready hai na? Chaliye, fir shuru karte hain apni baat-cheet 😄. `,
+            content: `Haan ji, kaise ho sab log! Swagat hai aap sabka, umeed hai sab mast honge aur energy full hogi. Chai ready hai na? Chaliye, fir shuru karte hain apni baat-cheet 😄.`,
             timestamp: new Date().toISOString(),
             read: true,
           },
@@ -63,7 +68,7 @@ export default function ConversationPage() {
           {
             role: "bot",
             content:
-              "Alright!! Welcome Kaise ho sab!!Chaliye, fir shuru karte hain apni baat-cheet—main hoon Piyush Garg, aur aaj hum seedhi, practical baat karenge: real-world build, scale aur ship.", 
+              "Alright!! Welcome Kaise ho sab!! Chaliye, fir shuru karte hain apni baat-cheet—main hoon Piyush Garg, aur aaj hum seedhi, practical baat karenge: real-world build, scale aur ship.",
             timestamp: new Date().toISOString(),
             read: true,
           },
@@ -113,7 +118,7 @@ export default function ConversationPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input, personaId }),
@@ -124,18 +129,33 @@ export default function ConversationPage() {
       if (response.ok) {
         setMessages((prev) => [
           ...prev,
-          { role: "bot", content: data.reply, timestamp: new Date().toISOString(), read: true },
+          {
+            role: "bot",
+            content: data.reply,
+            timestamp: new Date().toISOString(),
+            read: true,
+          },
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          { role: "bot", content: `Error: ${data.error}`, timestamp: new Date().toISOString(), read: false },
+          {
+            role: "bot",
+            content: `Error: ${data.error}`,
+            timestamp: new Date().toISOString(),
+            read: false,
+          },
         ]);
       }
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { role: "bot", content: `Error: ${error.message}`, timestamp: new Date().toISOString(), read: false },
+        {
+          role: "bot",
+          content: `Error: ${error.message}`,
+          timestamp: new Date().toISOString(),
+          read: false,
+        },
       ]);
     } finally {
       setLoading(false);
@@ -164,7 +184,9 @@ export default function ConversationPage() {
           <AnimatePresence initial={false}>
             {messages.map((msg, i) => {
               const isUser = msg.role === "user";
-              const avatarSrc = isUser ? personaImages.guest : personaImages[personaId] || personaImages.guest;
+              const avatarSrc = isUser
+                ? personaImages.guest
+                : personaImages[personaId] || personaImages.guest;
               const timestamp = formatTimestamp(msg.timestamp, now);
 
               return (
@@ -175,7 +197,9 @@ export default function ConversationPage() {
                   exit="hidden"
                   variants={messageVariants}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={`flex flex-col max-w-[70%] sm:max-w-[70%] ${isUser ? "ml-auto flex-row-reverse" : "mr-auto"}`}
+                  className={`flex flex-col max-w-[70%] sm:max-w-[70%] ${
+                    isUser ? "ml-auto flex-row-reverse" : "mr-auto"
+                  }`}
                 >
                   <div className="flex items-end">
                     <img
@@ -201,7 +225,6 @@ export default function ConversationPage() {
                         {msg.read && <TickIcon dark={false} className="ml-[-4px]" />}
                       </div>
                     </div>
-
                   )}
 
                   {!isUser && timestamp && (
@@ -234,7 +257,9 @@ export default function ConversationPage() {
                   <span className="animate-bounce animation-delay-300">.</span>
                 </div>
                 <div className="rounded-lg bg-gray-100 dark:bg-gray-700 ml-2 mr-2 sm:ml-3 sm:mr-3 px-3 py-2 flex flex-col items-center">
-                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm select-none">Typing...</span>
+                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm select-none">
+                    Typing...
+                  </span>
                 </div>
               </div>
             </motion.div>
